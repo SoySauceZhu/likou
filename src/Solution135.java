@@ -1,30 +1,47 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static java.lang.Math.max;
+
 public class Solution135 {
     public int candy(int[] ratings) {
-        for (int i = 0; i < ratings.length; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < ratings.length; j++) {
-                if (ratings[j] < ratings[minIndex]) {
-                    minIndex = j;
-                }
+        int[] candies = new int[ratings.length];
+        Arrays.fill(candies, 1);
 
-                int temp = ratings[j];
-                ratings[j] = ratings[minIndex];
+        if (ratings.length == 1) {
+            return 1;
+        }
+
+        for (int i = 0; i < ratings.length - 1; i++) {
+            if (ratings[i] < ratings[i + 1]) {
+                candies[i + 1] = max(candies[i] + 1, candies[i + 1]);
             }
         }
 
-        int num = 0;
-        int lastCandy = 0;
-
-        for (int i = 1; i < ratings.length; i++) {
-            if (ratings[i] > ratings[i - 1]) {
-                num += lastCandy + 1;
-            }
-            if (ratings[i] < ratings[i - 1]) {
-
+        for (int j = ratings.length - 1; j > 0; j--) {
+            if (ratings[j - 1] > ratings[j]) {
+                candies[j - 1] = max(candies[j] + 1, candies[j - 1]);
             }
         }
 
+        int sum = 0;
+        for (int i : candies) {
+            sum += i;
+        }
 
-        return num;
+        return sum;
     }
+
+    public static void main(String[] args) {
+//        int[] ratings = {1,2,3,4,5,3,1,2,2,1};
+
+        int[] ratings = {1, 0, 2};
+
+
+        Solution135 solution135 = new Solution135();
+        int candy = solution135.candy(ratings);
+        System.out.println(candy);
+    }
+
 }
