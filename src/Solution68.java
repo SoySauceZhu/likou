@@ -25,6 +25,8 @@ public class Solution68 {
             wordPtr++;
         }
 
+
+        // TODO: This can reuse justify()
         StringBuilder sb = new StringBuilder();
         for (int i = viewedPtr; i < wordPtr - 1; i++) {
             sb.append(words[i]).append(" ");
@@ -48,6 +50,7 @@ public class Solution68 {
         }
 
         // Handle edge condition firstly to simplify logic
+        // TODO: last row can be handled here
         if (words.length == 1) {
             return words[0] + " ".repeat(maxWidth - charNum);
         }
