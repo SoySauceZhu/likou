@@ -23,7 +23,7 @@ public class Solution42 {
         for (int end = height.length - 1; end > 0; end--) {
             int start = end - 1;
             int level = height[end];
-            while (start > 0 && height[start - 1] < level) {
+            while (start > 0 && height[start] < level) {
                 start--;
             }
             fillWater(height, water2, level, start, end);
@@ -48,7 +48,7 @@ public class Solution42 {
     }
 
     public static void main(String[] args) {
-        int[] height = new int[]{0,1,0,2,1,0,1,3,2,1,2,1};
+        int[] height = new int[]{4,2,0,3,2,4,3,4};
         Solution42 solution42 = new Solution42();
         int trap = solution42.trap(height);
         System.out.println(trap);
