@@ -2,6 +2,32 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class Solution42 {
+
+    // I think the suggested solution is much better than mine
+
+    /*
+        public int trap(int[] height) {
+		int n = height.length;
+		if (n < 3) return 0;
+		int[] prefixMax = new int[n];
+		int[] suffixMax = new int[n];
+		prefixMax[0] = height[0];
+		suffixMax[n-1] = height[n-1];
+		for (int i=1; i<n; i++) {
+			prefixMax[i] = Math.max(prefixMax[i-1], height[i]);
+		}
+		for (int i=n-2; i>=0; i--) {
+			suffixMax[i] = Math.max(suffixMax[i+1], height[i]);
+		}
+		int currMin, answer = 0;
+		for (int i=0; i<n; i++) {
+			currMin = Math.min(prefixMax[i], suffixMax[i]);
+			if (height[i] < currMin) answer += (currMin - height[i]);
+		}
+		return answer;
+	}
+     */
+
     public int trap(int[] height) {
         int[] water1 = new int[height.length];
         int[] water2 = new int[height.length];
