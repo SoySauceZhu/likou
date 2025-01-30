@@ -17,7 +17,9 @@ public class Solution416 {
         dp[0] = true;
 
         for (int num : nums) {
-            for (int i = num; i < dp.length; i++) {
+            for (int i = dp.length - 1; i >= num; i--) {
+                // Backward traverse => 0/1 knapsack problem (no reuse)
+                // Forward traverse => unbounded knapsack (allow reuse)
                 dp[i] = dp[i] || dp[i - num];
             }
         }
@@ -27,7 +29,7 @@ public class Solution416 {
 
     public static void main(String[] args) {
         Solution416 solution416 = new Solution416();
-        int[] nums = {1, 5,5,11};
+        int[] nums = {1, 2, 5};
         System.out.println(solution416.canPartition(nums));
     }
 }
