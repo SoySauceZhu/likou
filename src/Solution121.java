@@ -1,4 +1,17 @@
 public class Solution121 {
+    /*
+    def maxProfit(prices):
+        buy = float('-inf')  # Most negative value, no stock bought yet
+        sell = 0  # No profit yet
+
+        for price in prices:
+            buy = max(buy, -price)  # Buy at the lowest possible price
+            sell = max(sell, buy + price)  # Sell at the highest possible profit
+
+        return sell
+     */
+
+
     public int maxProfit(int[] prices) {
         int maxProfit = 0;
         int minPrice = Integer.MAX_VALUE;

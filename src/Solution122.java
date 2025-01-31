@@ -1,4 +1,17 @@
 public class Solution122 {
+
+    /*
+    def maxProfit(prices):
+        hold = float('-inf')  # No stock held at the beginning
+        cash = 0  # No profit yet
+
+        for price in prices:
+            hold = max(hold, cash - price)  # Buy or keep holding
+            cash = max(cash, hold + price)  # Sell or keep previous cash
+
+        return cash
+    */
+
     public int maxProfit(int[] prices) {
         if (prices == null || prices.length == 0) return 0;
 
