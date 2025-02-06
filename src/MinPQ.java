@@ -10,6 +10,7 @@ public class MinPQ {
         heap = new int[capacity];
         size = 0;
     }
+
     public MinPQ(int c) {
         capacity = c;
         heap = new int[capacity];
@@ -29,15 +30,15 @@ public class MinPQ {
     }
 
     private int parent(int i) {
-        return i / 2;
+        return (i - 1) / 2;
     }
 
     private int left(int i) {
-        return 2 * i;
+        return (i + 1) * 2 - 1;
     }
 
     private int right(int i) {
-        return 2 * i + 1;
+        return 2 * (i + 1);
     }
 
     private void heapifyUP(int i) {
@@ -73,7 +74,7 @@ public class MinPQ {
 
     public int pop() {
         int res = heap[0];
-        heap[0] = heap[size--];
+        heap[0] = heap[--size];
         heapifyDown(0);
         return res;
     }
@@ -117,10 +118,19 @@ public class MinPQ {
         MinPQ minPQ = new MinPQ();
         minPQ.insert(1);
         minPQ.insert(3);
-        minPQ.insert(4);
         minPQ.insert(5);
+        minPQ.insert(7);
+        minPQ.insert(9);
+        minPQ.insert(11);
         System.out.println(minPQ);
         minPQ.insert(2);
         System.out.println(minPQ);
+        System.out.println(minPQ.pop());
+        System.out.println(minPQ.pop());
+        System.out.println(minPQ.pop());
+        System.out.println(minPQ.pop());
+        System.out.println(minPQ.pop());
+        System.out.println(minPQ.pop());
+        System.out.println(minPQ.pop());
     }
 }
