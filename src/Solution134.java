@@ -9,6 +9,17 @@ public class Solution134 {
         }
 
 
+        /* You accumulate your “tank” as you move forward.
+
+            If at station i the tank goes negative, it means no station between your current start and i can be a valid start (because they’d start with even less gas).
+
+            So you reset the tank and set the next station (i+1) as the new candidate start.
+
+            Furthermore, there is only one solution, so if you've tested pos `i` is not impossible,
+            and you've tested pos `i+1` is possible, then `i+1` is the answer
+         */
+
+
         int pos = 0;
         int tank = 0;
         for (int i = 0; i < gas.length; i++) {
