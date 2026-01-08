@@ -2,29 +2,14 @@ import java.util.Arrays;
 
 class Solution88 {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        // Create a copy of nums1's first m elements
-        // Directly make modification on nums1
-        int[] nums1Copy = Arrays.copyOf(nums1, m);
-
-        int i = 0, j = 0, k = 0;
-
-        // Merge nums1Copy and nums2 into nums1
-        while (i < m && j < n) {
-            if (nums1Copy[i] < nums2[j]) {
-                nums1[k++] = nums1Copy[i++];
+        // start from the back
+        int i = m - 1, j = n - 1;
+        for (int k = nums1.length - 1; k >= 0; --k) {
+            if (nums1[i] > nums2[j]) {
+                nums1[k] = nums1[i--];
             } else {
-                nums1[k++] = nums2[j++];
+                nums1[k] = nums2[j--];
             }
-        }
-
-        // Copy remaining elements of nums1Copy (if any)
-        while (i < m) {
-            nums1[k++] = nums1Copy[i++];
-        }
-
-        // Copy remaining elements of nums2 (if any)
-        while (j < n) {
-            nums1[k++] = nums2[j++];
         }
     }
 

@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Solution380 {
     private List<Integer> list;
@@ -23,9 +26,9 @@ public class Solution380 {
             return false;
         }
         int i = map.get(val);
-        int last = list.getLast();
+        int last = list.get(list.size() - 1);
         list.set(i, last);
-        list.removeLast();
+        list.set(list.size() - 1, null);
         map.remove(val);
         map.put(last, i);
         return true;
