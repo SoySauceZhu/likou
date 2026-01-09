@@ -2,79 +2,45 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class Solution42 {
-
-    // I think the suggested solution is much better than mine
-
-    /*
-        public int trap(int[] height) {
-		int n = height.length;
-		if (n < 3) return 0;
-		int[] prefixMax = new int[n];
-		int[] suffixMax = new int[n];
-		prefixMax[0] = height[0];
-		suffixMax[n-1] = height[n-1];
-		for (int i=1; i<n; i++) {
-			prefixMax[i] = Math.max(prefixMax[i-1], height[i]);
-		}
-		for (int i=n-2; i>=0; i--) {
-			suffixMax[i] = Math.max(suffixMax[i+1], height[i]);
-		}
-		int currMin, answer = 0;
-		for (int i=0; i<n; i++) {
-			currMin = Math.min(prefixMax[i], suffixMax[i]);
-			if (height[i] < currMin) answer += (currMin - height[i]);
-		}
-		return answer;
-	}
-     */
-
     public int trap(int[] height) {
-        int[] water1 = new int[height.length];
-        int[] water2 = new int[height.length];
-        int[] water = new int[height.length];
+        int[] preHighest = new int[height.length];
+        int[] postHighest = new int[height.length];
+        preHighest[0] = 0;
+        postHighest[height.length - 1] = 0;
+        int pre = 0;
+        int pos = 0;
 
-        for (int start = 0; start < height.length - 1; start++) {
-            int end = start + 1;
-            int level = height[start];
-            while (end < height.length && height[end] < level) {
-                end++;
+        for (int i = 1; i < height.length; i++) {
+            if (height[i - 1] > pre) {
+                preHighest[i] = height[i - 1];
+                pre = height[i - 1];
+            } else {
+                preHighest[i] = pre;
             }
-            fillWater(height, water1, level, start, end);
 
-            start = end - 1;
+            int j = height.length - 1 - i;
 
-            // The for loop will update the variable at THIS LINE !!!
-        }
-
-        for (int end = height.length - 1; end > 0; end--) {
-            int start = end - 1;
-            int level = height[end];
-            while (start > 0 && height[start] < level) {
-                start--;
+            if (height[j + 1] > pos) {
+                postHighest[j] = height[j + 1];
+                pos = height[j + 1];
+            } else {
+                postHighest[j] = pos;
             }
-            fillWater(height, water2, level, start, end);
-            end = start + 1;
         }
 
-        for (int i = 0; i < water1.length; i++) {
-            water[i] = min(water1[i], water2[i]);
+        int water = 0;
+
+        for (int i = 0; i < height.length; i++) {
+            int temp = Math.min(preHighest[i], postHighest[i]) - height[i];
+            if (temp > 0) water += temp;
         }
 
-        int sum = 0;
-        for (int j : water) {
-            sum += j;
-        }
-        return sum;
+        return water;
     }
 
-    private void fillWater(int[] height, int[] water, int level, int start, int end) {
-        for (int i = start; i < end; i++) {
-            water[i] = max(level - height[i], water[i]);
-        }
-    }
 
     public static void main(String[] args) {
-        int[] height = new int[]{4,2,0,3,2,4,3,4};
+        int[] height = new int[]{4,2,0,3,2,5};
         Solution42 solution42 = new Solution42();
         int trap = solution42.trap(height);
         System.out.println(trap);

@@ -1,46 +1,59 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Solution380 {
-    private List<Integer> list;
-    private Map<Integer, Integer> map;
+    public class RandomizedSet {
+        // HashMap to store value -> index mapping for O(1) lookup
+        private Map<Integer, Integer> valueToIndexMap;
+        // ArrayList to store actual values for O(1) random access
+        private List<Integer> valuesList;
+        // Random number generator for getRandom() method
+        private Random random;
 
-    public Solution380() {
-        list = new ArrayList<>();
-        map = new HashMap<>();
-    }
-
-    public boolean insert(int val) {
-        if (map.containsKey(val)) {
-            return false;
+        public RandomizedSet() {
+            valueToIndexMap = new HashMap<>();
+            valuesList = new ArrayList<>();
+            random = new Random();
         }
-        map.put(val, list.size());
-        list.add(val);
-        return true;
-    }
 
-    public boolean remove(int val) {
-        if (!map.containsKey(val)) {
-            return false;
+
+        /*
+            The problem is:
+            - get should be done at O(1) and random, so you need an index-able array list
+            - remove should be done at O(1), but remove in array list is (usually) not O(1).
+            - trick: when remove, you can avoid barrel shift by swapping the removed element
+                     with last element, and delete the end.
+         */
+
+        public boolean insert(int val) {
+            if (valueToIndexMap.containsKey(val)) return false;
+
+            valueToIndexMap.put(val, valuesList.size());
+            valuesList.add(val);
+            return true;
         }
-        int i = map.get(val);
-        int last = list.get(list.size() - 1);
-        list.set(i, last);
-        list.set(list.size() - 1, null);
-        map.remove(val);
-        map.put(last, i);
-        return true;
+
+        public boolean remove(int val) {
+            if (!valueToIndexMap.containsKey(val)) return false;
+
+            int idx = valueToIndexMap.get(val);
+            valueToIndexMap.put(valuesList.get(valuesList.size() - 1), idx);
+            valueToIndexMap.remove(val);
+            valuesList.set(idx, valuesList.get(valuesList.size() - 1));
+            valuesList.remove(valuesList.size() - 1);
+
+            return true;
+        }
+
+        public int getRandom() {
+            int rand = random.nextInt(valuesList.size());
+            return valuesList.get(rand);
+        }
     }
 
-    public int getRandom() {
-        int index = (int) (Math.random() * list.size());
-        return list.get(index);
-    }
 
     public static void main(String[] args) {
-        Solution380 randomizedSet = new Solution380();
+        Solution380 solution380 = new Solution380();
+        Solution380.RandomizedSet randomizedSet = solution380.new RandomizedSet();
 
         // Test insert
         System.out.println("Insert 1: " + randomizedSet.insert(1)); // true
