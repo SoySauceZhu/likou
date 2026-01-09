@@ -1,22 +1,27 @@
 public class Solution151 {
     public String reverseWords(String s) {
-        String[] words = s.trim().split("\\W+");
+//        String[] strings = s.split(" ");
+//        int idx = 0;
+//        for (int i = 0; i < strings.length; i++) {
+//            if (!strings[i].isEmpty()) {
+//                strings[idx++] = strings[i];
+//            }
+//        }
 
-        int l = 0, r = words.length - 1;
-        while (l < r) {
-            String temp = words[l];
-            words[l] = words[r];
-            words[r] = temp;
-            l++;
-            r--;
+        String[] strings = s.strip().split("\\s+");
+        int idx = strings.length;
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = idx - 1; i >= 0; i--) {
+            sb.append(strings[i]).append(" ");
         }
 
-        return String.join(" ", words);
+        return sb.substring(0, sb.length() - 1);
     }
 
     public static void main(String[] args) {
         Solution151 solution151 = new Solution151();
-        String s = "hello world to you";
+        String s = "hello world  ";
         System.out.println(solution151.reverseWords(s));
     }
 }
