@@ -1,16 +1,17 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Solution383 {
     public boolean canConstruct(String ransomNote, String magazine) {
-        int[] count = new int[26];  // For 'a' to 'z'
-
-        // Count letters in magazine
-        for (char c : magazine.toCharArray()) {
-            count[c - 'a']++;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < magazine.length(); i++) {
+            map.put(magazine.charAt(i), map.getOrDefault(magazine.charAt(i), 0) + 1);
         }
 
-        // Subtract letters used in ransomNote
-        for (char c : ransomNote.toCharArray()) {
-            count[c - 'a']--;
-            if (count[c - 'a'] < 0) return false;  // Not enough of character c
+        for (int i = 0; i < ransomNote.length(); i++) {
+            if (!map.containsKey(ransomNote.charAt(i))) return false;
+            map.put(ransomNote.charAt(i), map.get(ransomNote.charAt(i)) - 1);
+            if (map.get(ransomNote.charAt(i)) < 0) return false;
         }
 
         return true;

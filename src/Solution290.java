@@ -3,28 +3,33 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Solution290 {
-    public boolean wordPattern(String pattern, String s) {
-        String[] words = s.split(" ");
-        String[] patterns = pattern.split("");
-        if (patterns.length != words.length) return false;
-        Map<String, Integer> wordMap = new HashMap<>();
-        Map<String, Integer> patternMap = new HashMap<>();
 
-        int n = 0;
-        int m = 0;
+    public boolean wordPattern(String s, String pattern) {
+        Map<String, Character> pattern2s = new HashMap<>();
+        Map<Character, String> s2pattern = new HashMap<>();
 
-        for (int i = 0; i < pattern.length(); i++) {
-            String word = words[i];
-            String pat = patterns[i];
-            if (!wordMap.containsKey(word)) {
-                wordMap.put(word, n++);
+        String[] patternArray = pattern.split(" ");
+
+        if (patternArray.length != s.length()) return false;
+
+        for (int i = 0; i < s.length(); i++) {
+            String patternString = patternArray[i];
+            char sChar = s.charAt(i);
+
+            if (s2pattern.containsKey(sChar) && !Objects.equals(s2pattern.get(sChar), patternString)) {
+                return false;
+            } else {
+                s2pattern.put(sChar, patternString);
             }
-            if (!patternMap.containsKey(pat)) {
-                patternMap.put(pat, m++);
+
+            if (pattern2s.containsKey(patternString) && pattern2s.get(patternString) != sChar) {
+                return false;
+            } else {
+                pattern2s.put(patternString, sChar);
             }
 
-            if (!Objects.equals(patternMap.get(pat), wordMap.get(word))) return false;
         }
+
         return true;
     }
 
@@ -53,3 +58,36 @@ public class Solution290 {
     }
 
 }
+
+
+//
+//
+//
+//
+//
+//
+//
+//public boolean wordPattern(String pattern, String s) {
+//    String[] words = s.split(" ");
+//    String[] patterns = pattern.split("");
+//    if (patterns.length != words.length) return false;
+//    Map<String, Integer> wordMap = new HashMap<>();
+//    Map<String, Integer> patternMap = new HashMap<>();
+//
+//    int n = 0;
+//    int m = 0;
+//
+//    for (int i = 0; i < pattern.length(); i++) {
+//        String word = words[i];
+//        String pat = patterns[i];
+//        if (!wordMap.containsKey(word)) {
+//            wordMap.put(word, n++);
+//        }
+//        if (!patternMap.containsKey(pat)) {
+//            patternMap.put(pat, m++);
+//        }
+//
+//        if (!Objects.equals(patternMap.get(pat), wordMap.get(word))) return false;
+//    }
+//    return true;
+//}

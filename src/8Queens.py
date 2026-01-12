@@ -47,7 +47,7 @@ def genetic_algorithm(generations=1000, pop_size=100):
 
         if min(scores) == 0:
             best = population[scores.index(min(scores))]
-            print("Solution found in generation", gen)
+            print("Solution1 found in generation", gen)
             print("Chromosome:", best)
             return best
 

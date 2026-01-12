@@ -2,33 +2,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Solution205 {
+
     public boolean isIsomorphic(String s, String t) {
         if (s.length() != t.length()) return false;
-        Map<Character, Character> mapST = new HashMap<>();
-        Map<Character, Character> mapTS = new HashMap<>();
+
+        // You map each character in `s` to `t`
+
+        Map<Character, Character> s2t = new HashMap<>();
+        Map<Character, Character> t2s = new HashMap<>();
 
         for (int i = 0; i < s.length(); i++) {
             char sChar = s.charAt(i);
             char tChar = t.charAt(i);
 
-            if (!mapST.containsKey(sChar)) {
-                mapST.put(sChar, tChar);
+            if (s2t.getOrDefault(sChar, tChar) != tChar) {
+                return false;
             } else {
-                if (!mapST.get(sChar).equals(tChar)) {
-                    return false;
-                }
+                s2t.put(sChar, tChar);
             }
 
-            if (!mapTS.containsKey(tChar)) {
-                mapTS.put(tChar, sChar);
+            if (t2s.getOrDefault(tChar, sChar) != sChar) {
+                return false;
             } else {
-                if (!mapTS.get(tChar).equals(sChar)) {
-                    return false;
-                }
+                t2s.put(tChar, sChar);
             }
-
-
         }
+
+
         return true;
     }
 
@@ -42,3 +42,41 @@ public class Solution205 {
         System.out.println(solution.isIsomorphic("ab", "aa")); // Expected: false
     }
 }
+
+
+//
+//
+//
+//
+//
+//
+//
+//public boolean isIsomorphic(String s, String t) {
+//    if (s.length() != t.length()) return false;
+//    Map<Character, Character> mapST = new HashMap<>();
+//    Map<Character, Character> mapTS = new HashMap<>();
+//
+//    for (int i = 0; i < s.length(); i++) {
+//        char sChar = s.charAt(i);
+//        char tChar = t.charAt(i);
+//
+//        if (!mapST.containsKey(sChar)) {
+//            mapST.put(sChar, tChar);
+//        } else {
+//            if (!mapST.get(sChar).equals(tChar)) {
+//                return false;
+//            }
+//        }
+//
+//        if (!mapTS.containsKey(tChar)) {
+//            mapTS.put(tChar, sChar);
+//        } else {
+//            if (!mapTS.get(tChar).equals(sChar)) {
+//                return false;
+//            }
+//        }
+//
+//
+//    }
+//    return true;
+//}
