@@ -39,7 +39,7 @@ class BinaryTreeBuild {
     }
 
     public static void main(String[] args) {
-        Solution117 sol = new Solution117();
+        BinaryTreeBuild sol = new BinaryTreeBuild();
 
         int[] values = {1, 2, 3, 4, 5, 6, 7};
         Node root = sol.buildTree(values, 0);
