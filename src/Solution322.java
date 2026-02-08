@@ -8,37 +8,34 @@ public class Solution322 {
             coinSet.add(c);
         }
         int[] dp = new int[amount + 1];     // Least # of combo to reach `i`$
-        Deque<Integer> lastReachableStack = new ArrayDeque<>();
-        lastReachableStack.add(0);
-        dp[0] = 0;
 
-        for (int i = 1; i <= amount; i++) {
-            int minStep = Integer.MAX_VALUE;
-            for (int lastReachable : lastReachableStack) {
-                int difference = i - lastReachable;
-                if (coinSet.contains(difference)) {
-                    minStep = Math.min(minStep, dp[lastReachable] + 1);
+        for (int n = 1; n < dp.length; n++) {
+            int count = Integer.MAX_VALUE;
+
+            // find min(dp[n-c] + 1)
+            for (int c : coins) {
+                if (n - c >= 0 && dp[n-c] != -1) {
+                    count = Math.min(count, dp[n - c] + 1);
                 }
             }
 
-            if (minStep == Integer.MAX_VALUE) minStep = -1;
-            dp[i] = minStep;
-            lastReachableStack.push(i);
+            if (count == Integer.MAX_VALUE) count = -1;
+
+            dp[n] = count;
         }
 
-
-        return Math.max(dp[dp.length - 1], -1);
+        return (dp[amount] == Integer.MAX_VALUE || dp[amount] == 0) ? -1 : dp[amount];
     }
 
     public static void main(String[] args) {
         Solution322 s = new Solution322();
-//
+
 //        int[] coins1 = {1, 2, 5};
 //        int amount1 = 11;
 //        System.out.println("Test 1 expected=3 actual=" + s.coinChange(coins1, amount1));
 //
         int[] coins2 = {2};
-        int amount2 = 1;
+        int amount2 = 3;
         System.out.println("Test 2 expected=-1 actual=" + s.coinChange(coins2, amount2));
 
         int[] coins3 = {1};
